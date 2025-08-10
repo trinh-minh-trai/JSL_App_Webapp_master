@@ -168,7 +168,8 @@ def joinlink():
 def join():
     if 'localId' in session:
         user = db.child('users').child(session['localId']).get()
-        display_name = user.val().get('name', 'Guest')
+        user_data = user.val() or {}
+        display_name = user_data.get('name', 'Guest')
     else:
         display_name = 'Guest'
     mute_audio = request.args.get('mute_audio') # 1 or 0
