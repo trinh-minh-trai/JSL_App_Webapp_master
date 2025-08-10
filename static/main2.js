@@ -6,12 +6,14 @@ import {
 } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0";
 import Stats from 'https://cdnjs.cloudflare.com/ajax/libs/stats.js/r17/Stats.min.js';
 
+const socket = window.socket || io();
+window.socket = socket;
 let isRunning = false;
 let requestID;
 const startLandmarking = async () => {
     if (isRunning) return; // Ngăn chặn việc khởi chạy nhiều lần
     isRunning = true;
-// const socket = io();
+
 const POSE_CONNECTIONS = [
     [0, 1], [1, 2], [2, 3], [3, 7], [0, 4], [4, 5],
     [5, 6], [6, 8], [9, 10], [11, 12], [11, 13],
@@ -105,6 +107,7 @@ const init = async () => {
                 handLandmarks: results ? results : [],
                 poseLandmarks: poseLandmarkerResult.landmarks ? poseLandmarkerResult.landmarks : []
             };
+            if (!socket.id) return;
             try {
                 fetch(window.location.origin + '/combined_landmark_endpoint', {
                     method: 'POST',
@@ -154,8 +157,13 @@ const stopLandmarking = () => {
   
   // Tìm nút bằng ID và thêm sự kiện click
   const startButton = document.getElementById('start-button');
-  startButton.addEventListener('click', startLandmarking);
-  
+  startButton.addEventListener('click', () => {
+      if (socket.connected) {
+          startLandmarking();
+      } else {
+          socket.once('connect', startLandmarking);
+      }
+  });
   const stopButton = document.getElementById('stop-button');
   stopButton.addEventListener('click', stopLandmarking);
 
