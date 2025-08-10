@@ -106,7 +106,7 @@ const init = async () => {
                 poseLandmarks: poseLandmarkerResult.landmarks ? poseLandmarkerResult.landmarks : []
             };
             try {
-                fetch(window.location.origin + '/combined_landmark_endpoint', {
+                fetch('https://27.81.58.107:5000/combined_landmark_endpoint', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

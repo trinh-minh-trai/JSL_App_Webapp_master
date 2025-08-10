@@ -1,4 +1,3 @@
-import os
 from flask_cors import CORS  # add this
 import platform
 from flask_socketio import SocketIO, emit, join_room
@@ -17,14 +16,14 @@ from collections import Counter
 tf.config.set_visible_devices([], 'GPU')
 app = Flask(__name__, static_folder='static')
 config = {
-    "apiKey": "AIzaSyD3IEdTZbr7EOe5TZDrXXeEHRfiVoKutrc",
-    "authDomain": "jsl-app-webapp.firebaseapp.com",
-    "projectId": "jsl-app-webapp",
-    "storageBucket": "jsl-app-webapp.firebasestorage.app",
-    "messagingSenderId": "32217431063",
-    "appId": "1:32217431063:web:445be2ec67ae5089aef052",
-    "measurementId": "G-08K0D87JB5",
-    'databaseURL':'https://jsl-app-webapp-default-rtdb.firebaseio.com'
+    "apiKey": "",
+    "authDomain": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": "",
+    'databaseURL':''
 }
 firebase = pyrebase.initialize_app(config=config)
 auth = firebase.auth()
@@ -168,9 +167,7 @@ def joinlink():
 def join():
     if 'localId' in session:
         user = db.child('users').child(session['localId']).get()
-        display_name = user.val().get('name', 'Guest')
-    else:
-        display_name = 'Guest'
+        display_name = user.val()['name']
     mute_audio = request.args.get('mute_audio') # 1 or 0
     mute_video = request.args.get('mute_video') # 1 or 0
     room_id = request.args.get('room_id')
@@ -372,20 +369,5 @@ def on_data(data):
     socketio.emit('data', data, room=target_sid)
 
 
-@app.route("/health", methods=["GET"])
-def health():
-    return "ok", 200
-
-if __name__ == "__main__":
-    # Giảm bớt log TF, tuỳ chọn tắt oneDNN nếu muốn hết cảnh báo sai khác số học:
-    os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
-    # os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
-
-    socketio.run(
-        app,
-        host="0.0.0.0",
-        port=5000,
-        debug=True,
-        certfile="cert.pem",
-        keyfile="key.pem",
-    )
+# if __name__ == "__main__":
+#     socketio.run(app, debug=True,port=5000)

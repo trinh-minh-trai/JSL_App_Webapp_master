@@ -21,7 +21,7 @@ tensorflow-estimator==2.8.0
 tensorflow-io-gcs-filesystem==0.31.0
 
 # Thư viện hình ảnh (nếu project cần)
-opencv-python==4.7.0.72
+opencv-python==4.7.0.71
 opencv-contrib-python==4.7.0.72
 
 # mediapipe (nếu bạn chạy xử lý server-side; nếu không dùng thì bỏ dòng này)

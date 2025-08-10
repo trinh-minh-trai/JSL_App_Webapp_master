@@ -3,14 +3,14 @@ import pyrebase
 
 app = Flask(__name__)
 config = {
-    "apiKey": "AIzaSyD3IEdTZbr7EOe5TZDrXXeEHRfiVoKutrc",
-    "authDomain": "jsl-app-webapp.firebaseapp.com",
-    "projectId": "jsl-app-webapp",
-    "storageBucket": "jsl-app-webapp.firebasestorage.app",
-    "messagingSenderId": "32217431063",
-    "appId": "1:32217431063:web:445be2ec67ae5089aef052",
-    "measurementId": "G-08K0D87JB5",
-    'databaseURL':'https://jsl-app-webapp-default-rtdb.firebaseio.com'
+    "apiKey": "",
+    "authDomain": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": "",
+    'databaseURL':''
 }
 
 firebase = pyrebase.initialize_app(config=config)

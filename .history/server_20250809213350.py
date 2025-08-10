@@ -168,9 +168,7 @@ def joinlink():
 def join():
     if 'localId' in session:
         user = db.child('users').child(session['localId']).get()
-        display_name = user.val().get('name', 'Guest')
-    else:
-        display_name = 'Guest'
+        display_name = user.val()['name']
     mute_audio = request.args.get('mute_audio') # 1 or 0
     mute_video = request.args.get('mute_video') # 1 or 0
     room_id = request.args.get('room_id')
@@ -381,11 +379,4 @@ if __name__ == "__main__":
     os.environ.setdefault("TF_CPP_MIN_LOG_LEVEL", "2")
     # os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
-    socketio.run(
-        app,
-        host="0.0.0.0",
-        port=5000,
-        debug=True,
-        certfile="cert.pem",
-        keyfile="key.pem",
-    )
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)
