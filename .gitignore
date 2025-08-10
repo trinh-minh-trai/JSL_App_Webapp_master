@@ -7,3 +7,12 @@ build/
 .env
 .vscode/
 .history/
+venv/
+__pycache__/
+.env
+node_modules/
+.next/
+dist/
+build/
+.vscode/
+.history/
